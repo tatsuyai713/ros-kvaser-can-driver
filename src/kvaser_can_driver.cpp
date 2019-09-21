@@ -28,10 +28,8 @@ CANConfig loadYMLFile(std::string ymlpath)
   return config;
 }
 
-/*--------------------------------------------------------------------
- * KvaserCanDriver()
- * Constructor
- *------------------------------------------------------------------*/
+// KvaserCanDriver()
+// Constructor
 KvaserCanDriver::KvaserCanDriver()
     : nh_(""), pnh_("~")
 {
@@ -156,10 +154,8 @@ KvaserCanDriver::KvaserCanDriver()
   }
 } //KvaserCanDriver()
 
-/*--------------------------------------------------------------------
- * ~KvaserCanDriver()
- * Destructor
- *------------------------------------------------------------------*/
+// ~KvaserCanDriver()
+// Destructor
 KvaserCanDriver::~KvaserCanDriver()
 {
   for (int32_t i = 0; i < device_channel_num_; ++i)
@@ -174,10 +170,8 @@ KvaserCanDriver::~KvaserCanDriver()
   delete kvaser_mtx_;
 } //~KvaserCanDriver()
 
-/*--------------------------------------------------------------------
- * cantxCallback()
- * Callback function
- *------------------------------------------------------------------*/
+// cantxCallback()
+// Callback function
 void KvaserCanDriver::cantxCallback(const ros_kvaser_can_driver::CANFrame::ConstPtr &can_frame)
 {
   const int32_t time_out = 10; //msec
@@ -206,10 +200,8 @@ void KvaserCanDriver::cantxCallback(const ros_kvaser_can_driver::CANFrame::Const
   }
 }
 
-/*--------------------------------------------------------------------
- * cantxCallback()
- * Receive thread function
- *------------------------------------------------------------------*/
+// canReceiveThread()
+// Receive thread function
 void KvaserCanDriver::canReceiveThread(uint8_t channel_num)
 {
   while (ros::ok())
@@ -308,10 +300,6 @@ void KvaserCanDriver::canReceiveThread(uint8_t channel_num)
   }
 }
 
-/*--------------------------------------------------------------------
- * main()
- * Main function to set up ROS node.
- *------------------------------------------------------------------*/
 int32_t main(int32_t argc, char **argv)
 {
   // Setup ROS.
