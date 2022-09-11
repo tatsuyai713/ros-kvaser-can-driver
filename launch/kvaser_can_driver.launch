@@ -2,14 +2,14 @@
 <launch>
   <arg name="ns" default="/system"/>
   <arg name="respawn" default="false"/>
-  <arg name="device_channel_num" default="2"/>
-  <arg name="can_baudrate" default="1000000"/>
+  <arg name="device_channel_num" default="1"/>
+  <arg name="can_bitrate" default="500000"/>
   <arg name="can_tx_config_file" default="$(find ros_kvaser_can_driver)/config/can_tx_config.yaml" />
   <arg name="can_rx_config_file" default="$(find ros_kvaser_can_driver)/config/can_rx_config.yaml" />
   <group ns="$(arg ns)">
     <node pkg="ros_kvaser_can_driver" type="ros_kvaser_can_driver_node" name="kvaser_can_driver" respawn="$(arg respawn)" output="screen">
       <param name="device_channel_num" value="$(arg device_channel_num)" />
-      <param name="can_baudrate" value="$(arg can_baudrate)" />
+      <param name="can_bitrate" value="$(arg can_bitrate)" />
       <param name="can_tx_config_file" value="$(arg can_tx_config_file)" />
       <param name="can_rx_config_file" value="$(arg can_rx_config_file)" />
     </node>

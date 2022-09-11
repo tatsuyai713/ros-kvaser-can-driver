@@ -42,7 +42,7 @@ KvaserCanDriver::KvaserCanDriver()
   // parameters
   int bitrate = 0;
   pnh_.param("device_channel_num", device_channel_num_, 1);
-  pnh_.param("can_bitrate", bitrate, 1000000);
+  pnh_.param("can_bitrate", bitrate, 500000);
   pnh_.param("can_tx_config_file", can_tx_config_file_, std::string("can_tx_config.yaml"));
   pnh_.param("can_rx_config_file", can_rx_config_file_, std::string("can_rx_config.yaml"));
 
