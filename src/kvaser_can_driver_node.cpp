@@ -1,6 +1,6 @@
 #include "kvaser_can_driver_node.h"
 
-KvaserCanDriver::KvaserCanDriver() : Node("data_analysis_node")
+KvaserCanDriver::KvaserCanDriver() : Node("kvaser_can_driver_node")
 {
   // パラメータの取得
   this->declare_parameter("device_channel_num", 1);
@@ -64,10 +64,10 @@ KvaserCanDriver::KvaserCanDriver() : Node("data_analysis_node")
 
   // Existing subscription logic
   kvaser_can_tx_sub_ = this->create_subscription<ros_kvaser_can_driver::msg::CANFrame>(
-      "data_topic", 10, std::bind(&KvaserCanDriver::cantxCallback, this, std::placeholders::_1));
+      "can_tx", 10, std::bind(&KvaserCanDriver::cantxCallback, this, std::placeholders::_1));
 
   // Publisher creation logic for custom message
-  kvaser_can_rx_pub_ = this->create_publisher<ros_kvaser_can_driver::msg::CANFrame>("/system/can_rx", 10);
+  kvaser_can_rx_pub_ = this->create_publisher<ros_kvaser_can_driver::msg::CANFrame>("can_rx", 10);
 
   switch (bitrate)
   {
