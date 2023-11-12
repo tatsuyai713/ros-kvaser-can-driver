@@ -1,3 +1,4 @@
+std_msgs/Header   header
 uint32 	 kvaser_stamp
 uint8 	 device_channel
 uint16	 can_id

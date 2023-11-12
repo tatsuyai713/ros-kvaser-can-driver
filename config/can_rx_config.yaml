@@ -1,3 +1,4 @@
+can_rx_config:
 - device_channel: 0
   can_id: 0x201
   bypass_channel: 1

@@ -1,3 +1,4 @@
+can_tx_config:
 - device_channel: 0
   can_id: 0x201
 - device_channel: 0
