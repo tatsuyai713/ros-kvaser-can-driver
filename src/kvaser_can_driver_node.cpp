@@ -232,15 +232,20 @@ void KvaserCanDriver::canReceiveThread(uint8_t channel_num)
     unsigned int flag = 0;
     const unsigned long timeout_ms = 10;
 
+    rclcpp::Clock system_clock(RCL_SYSTEM_TIME);
+
     // Read CAN Data
     try
     {
       int res;
-      {
-        // boost::mutex::scoped_lock(kvaser_mtx_[channel_num]);
-        res = canReadWait(kvaser_hnd_[channel_num], &id, &rxmsg, &dlc, &flag, &kv_time_stamp, timeout_ms);
-        // res = canRead(kvaser_hnd_[channel_num], &id, &rxmsg, &dlc, &flag, &kv_time_stamp);
-      }
+      // boost::mutex::scoped_lock(kvaser_mtx_[channel_num]);
+      res = canReadWait(kvaser_hnd_[channel_num], &id, &rxmsg, &dlc, &flag, &kv_time_stamp, timeout_ms);
+      auto time_now = system_clock.now();
+      // Extract seconds and nanoseconds from the time_now
+      auto nanoseconds = time_now.nanoseconds();
+
+      // res = canRead(kvaser_hnd_[channel_num], &id, &rxmsg, &dlc, &flag, &kv_time_stamp);
+
       if (res != canOK)
       {
         RCLCPP_WARN_THROTTLE(this->get_logger(), *this, throttle_period, "CAN Error");
@@ -267,6 +272,10 @@ void KvaserCanDriver::canReceiveThread(uint8_t channel_num)
           {
             // RCLCPP_INFO(this->get_logger(), "CAN Receive %d 0x%3X",channel_num,(int)id);
             auto frame = ros_kvaser_can_driver::msg::CANFrame();
+            frame.header.frame_id = std::string("base_link");
+            frame.header.stamp.sec = nanoseconds / 1000000000; // converting nanoseconds to seconds
+            frame.header.stamp.nanosec = nanoseconds % 1000000000; // the remaining nanoseconds
+
             frame.device_channel = channel_num;
             frame.kvaser_stamp = kv_time_stamp;
             frame.can_id = id;
